@@ -38,4 +38,4 @@ python build.py
 - Vanilla JavaScript (Manifest V3)
 - HTML & CSS (Custom Professional Dark Theme)
 - Python (for build script)
-- Google Gemini API (`gemini-flash-latest`)
+- Google Gemini API (`gemini-3.1-flash-lite`)

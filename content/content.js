@@ -127,7 +127,7 @@ async function summarizeText(text) {
 
         const prompt = `Summarize the main agenda and important points of the following content in simple and easily understandable English. If the content contains different languages, translate and summarize it in English. Use standard HTML tags like <b>, <ul>, <li>, <p>, <h3> for formatting to make it look good, but do not use full document tags like <html>, <head> or <body>. Do not include markdown codeblocks around the HTML.\n\nContent:\n${text.substring(0, 30000)}`;
 
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${GEMINI_API_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
