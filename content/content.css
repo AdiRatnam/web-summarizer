@@ -1,0 +1,192 @@
+/* Global styles for Gemini Summarizer injected UI */
+
+:root {
+    --gemini-primary: #2563eb;
+    --gemini-bg: #1e293b;
+    --gemini-text: #f8fafc;
+    --gemini-hover: rgba(37, 99, 235, 0.1);
+    --gemini-selected: rgba(37, 99, 235, 0.2);
+}
+
+/* Highlight classes for selection mode */
+.gemini-selection-mode-active * {
+    cursor: crosshair !important;
+}
+
+.gemini-hover-highlight {
+    outline: 2px dashed var(--gemini-primary) !important;
+    background-color: var(--gemini-hover) !important;
+    transition: all 0.2s ease !important;
+}
+
+.gemini-selected-highlight {
+    outline: 2px solid var(--gemini-primary) !important;
+    background-color: var(--gemini-selected) !important;
+}
+
+/* Floating Action Panel (during selection) */
+#gemini-floating-panel {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 25px;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+#gemini-floating-panel button {
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+#gemini-btn-summarize {
+    background: var(--gemini-primary);
+    color: white;
+}
+
+#gemini-btn-summarize:hover {
+    filter: brightness(1.1);
+    transform: scale(1.05);
+}
+
+#gemini-btn-cancel {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    color: #cbd5e1;
+}
+
+#gemini-btn-cancel:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Summary Modal */
+#gemini-summary-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 1000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#gemini-summary-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#gemini-summary-modal {
+    background: var(--gemini-bg);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: var(--gemini-text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+#gemini-summary-overlay.active #gemini-summary-modal {
+    transform: translateY(0) scale(1);
+}
+
+#gemini-modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#gemini-modal-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--gemini-text);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#gemini-btn-close {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+#gemini-btn-close:hover {
+    color: white;
+}
+
+#gemini-modal-content {
+    padding: 24px;
+    overflow-y: auto;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+#gemini-modal-content h1, 
+#gemini-modal-content h2, 
+#gemini-modal-content h3 {
+    margin-top: 0;
+    color: white;
+}
+
+#gemini-modal-content ul {
+    padding-left: 20px;
+}
+
+#gemini-modal-content li {
+    margin-bottom: 8px;
+}
+
+/* Loading Spinner */
+.gemini-loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid rgba(79, 70, 229, 0.3);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: gemini-rotation 1s linear infinite;
+    margin: 20px auto;
+    display: block;
+}
+
+@keyframes gemini-rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
