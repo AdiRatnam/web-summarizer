@@ -2,6 +2,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const summarizeAllBtn = document.getElementById('summarize-all');
     const summarizeSelectBtn = document.getElementById('summarize-select');
     const statusMsg = document.getElementById('status-msg');
+    const apiKeyInput = document.getElementById('api-key');
+    const apiKeyStatus = document.getElementById('api-key-status');
+
+    // Load API Key
+    chrome.storage.local.get(['geminiApiKey'], (result) => {
+        if (result.geminiApiKey) {
+            apiKeyInput.value = result.geminiApiKey;
+        }
+    });
+
+    // Save API Key
+    apiKeyInput.addEventListener('change', (e) => {
+        const key = e.target.value.trim();
+        chrome.storage.local.set({ geminiApiKey: key }, () => {
+            apiKeyStatus.textContent = 'Key saved!';
+            setTimeout(() => { apiKeyStatus.textContent = ''; }, 2000);
+        });
+    });
 
     function showStatus(msg) {
         statusMsg.textContent = msg;

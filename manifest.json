@@ -8,15 +8,20 @@
   },
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "host_permissions": [
     "<all_urls>"
   ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["config.js", "content/content.js"],
+      "js": ["content/purify.min.js", "content/content.js"],
       "css": ["content/content.css"]
     }
   ]

@@ -11,28 +11,11 @@ A sleek, modern Chrome Extension that leverages the power of Google's Gemini API
 
 ## 🚀 Installation & Setup
 
-Because this extension uses your personal Gemini API key, it requires a quick local setup before loading it into Chrome.
-
-### 1. Add your API Key
-1. Get a Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey) (Ensure it starts with `AIza` or the new `AQ.` format).
-2. Create a file named `.env` in the root of this project.
-3. Add your key to the file like this:
-   ```env
-   GEMINI_API_KEY=your_actual_api_key_here
-   ```
-
-### 2. Build the Config
-Since this is a vanilla JavaScript extension without a bundler, run the included Python script to safely inject your key into the extension:
-```bash
-python build.py
-```
-*(This will generate a `config.js` file. Note: Both `.env` and `config.js` are ignored by git to keep your key safe!)*
-
-### 3. Load into Chrome
 1. Open Google Chrome and navigate to `chrome://extensions/`.
 2. Toggle on **Developer mode** in the top right corner.
-3. Click **Load unpacked**.
-4. Select the folder containing this repository.
+3. Click **Load unpacked** and select the folder containing this repository.
+4. Get a Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
+5. Click on the extension icon in your toolbar, and paste your API key into the input field. Your key will be securely saved!
 
 ## 🛠️ Tech Stack
 - Vanilla JavaScript (Manifest V3)

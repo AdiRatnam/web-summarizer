@@ -121,40 +121,35 @@ async function summarizeText(text) {
     summaryOverlay.classList.add('active');
 
     try {
-        if (typeof GEMINI_API_KEY === 'undefined' || !GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
-            throw new Error("API Key is missing. Please run build.py to generate config.js from your .env file.");
-        }
+        chrome.runtime.sendMessage({ action: 'FETCH_SUMMARY', text: text }, (response) => {
+            if (chrome.runtime.lastError) {
+                console.error("Runtime Error:", chrome.runtime.lastError);
+                contentDiv.innerHTML = `<div style="color: #ef4444; padding: 20px; text-align: center;">
+                    <h3>Error</h3>
+                    <p>Could not connect to the extension. Try reloading the page.</p>
+                </div>`;
+                return;
+            }
 
-        const prompt = `Summarize the main agenda and important points of the following content in simple and easily understandable English. If the content contains different languages, translate and summarize it in English. Use standard HTML tags like <b>, <ul>, <li>, <p>, <h3> for formatting to make it look good, but do not use full document tags like <html>, <head> or <body>. Do not include markdown codeblocks around the HTML.\n\nContent:\n${text.substring(0, 30000)}`;
-
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${GEMINI_API_KEY}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: prompt }]
-                }]
-            })
+            if (response && response.error) {
+                contentDiv.innerHTML = `<div style="color: #ef4444; padding: 20px; text-align: center;">
+                    <h3>Error generating summary</h3>
+                    <p>${DOMPurify.sanitize(response.error)}</p>
+                </div>`;
+            } else if (response && response.success && response.summary) {
+                contentDiv.innerHTML = DOMPurify.sanitize(response.summary);
+            } else {
+                contentDiv.innerHTML = `<div style="color: #ef4444; padding: 20px; text-align: center;">
+                    <h3>Error</h3>
+                    <p>Unknown error occurred.</p>
+                </div>`;
+            }
         });
-
-        if (!response.ok) {
-            throw new Error(`API returned ${response.status}`);
-        }
-
-        const data = await response.json();
-        const summary = data.candidates[0].content.parts[0].text;
-        
-        // Remove potential markdown code blocks if the model still returns them
-        const cleanSummary = summary.replace(/^```html/i, '').replace(/^```/i, '').replace(/```$/i, '');
-        contentDiv.innerHTML = cleanSummary;
-
     } catch (error) {
-        console.error("Gemini API Error:", error);
+        console.error("Error:", error);
         contentDiv.innerHTML = `<div style="color: #ef4444; padding: 20px; text-align: center;">
             <h3>Error generating summary</h3>
-            <p>${error.message}</p>
+            <p>${DOMPurify.sanitize(error.message)}</p>
         </div>`;
     }
 }
