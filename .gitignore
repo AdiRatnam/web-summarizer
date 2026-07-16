@@ -1,6 +1,5 @@
-# Environment Variables (Keep your API keys secret!)
+# Environment Variables
 .env
-config.js
 
 # OS generated files
 .DS_Store
